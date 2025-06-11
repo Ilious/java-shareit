@@ -1,6 +1,5 @@
 package ru.practicum.shareit.user.interfaces;
 
-import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.user.dto.UserDto;
 
 import java.util.List;

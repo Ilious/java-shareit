@@ -3,7 +3,7 @@ package ru.practicum.shareit.exception;
 import lombok.Getter;
 
 @Getter
-public class EntityAlreadyExistsException extends RuntimeException{
+public class EntityAlreadyExistsException extends RuntimeException {
 
     private final String entity;
 
