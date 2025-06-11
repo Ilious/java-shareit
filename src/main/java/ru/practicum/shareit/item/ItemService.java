@@ -9,6 +9,7 @@ import ru.practicum.shareit.item.interfaces.IItemRepo;
 import ru.practicum.shareit.item.interfaces.IItemService;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.interfaces.IUserRepo;
+import ru.practicum.shareit.user.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +33,7 @@ public class ItemService implements IItemService {
     @Override
     public List<ItemDto> getAllByUserId(Long userId) {
         log.debug("ItemService.getAll: started");
-        userRepo.validateId(userId);
+        userRepo.getUserById(userId);
         List<Item> items = itemRepo.findAllByUserId(userId);
         if (items.isEmpty())
             throw new EntityNotFoundException("Items", "storage", "any");
@@ -45,8 +46,8 @@ public class ItemService implements IItemService {
     @Override
     public ItemDto addItem(Long userId, ItemDto dto) {
         log.debug("ItemService.addItem: {}", dto);
-        userRepo.validateId(userId);
-        Item entity = ItemMapper.toEntity(dto);
+        User userById = userRepo.getUserById(userId);
+        Item entity = ItemMapper.toEntity(dto, userById);
 
         return ItemMapper.toDto(itemRepo.addItem(userId, entity));
     }
@@ -54,7 +55,7 @@ public class ItemService implements IItemService {
     @Override
     public ItemDto patchItem(Long id, ItemDto dto, Long userId) {
         log.debug("ItemService.patchItem: id {}, dto {}", id, dto);
-        userRepo.validateId(userId);
+        userRepo.getUserById(userId);
         Item item = getItem(id);
         ItemMapper.patchFields(item, dto);
 

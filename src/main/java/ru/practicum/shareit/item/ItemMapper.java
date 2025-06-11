@@ -4,17 +4,20 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.model.Item;
+import ru.practicum.shareit.user.UserMapper;
+import ru.practicum.shareit.user.model.User;
 
 import java.util.Objects;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ItemMapper {
 
-    public static Item toEntity(ItemDto dto) {
+    public static Item toEntity(ItemDto dto, User user) {
         return Item.builder()
                 .name(dto.name())
                 .description(dto.description())
                 .isAvailable(dto.isAvailable())
+                .owner(user)
                 .build();
     }
 
@@ -24,6 +27,7 @@ public class ItemMapper {
                 .name(item.getName())
                 .description(item.getDescription())
                 .isAvailable(item.getIsAvailable())
+                .owner(UserMapper.toDto(item.getOwner()))
                 .build();
     }
 

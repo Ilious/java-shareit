@@ -17,9 +17,9 @@ public interface IUserRepo {
 
     void removeUserById(Long id);
 
-    void validateId(Long id);
-
     boolean existsUserByEmail(String email);
 
     boolean existsUserByEmailAndIdNot(String email, Long id);
+
+    User getUserById(Long id);
 }

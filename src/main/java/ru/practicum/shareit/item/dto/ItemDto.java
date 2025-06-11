@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
+import ru.practicum.shareit.user.dto.UserDto;
 import ru.practicum.shareit.validator.ValidateGroups;
 
 /**
@@ -22,6 +23,8 @@ public record ItemDto(
 
         @JsonProperty("available")
         @NotNull(groups = ValidateGroups.OnCreate.class)
-        Boolean isAvailable
+        Boolean isAvailable,
+
+        UserDto owner
 ) {
 }

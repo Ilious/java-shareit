@@ -1,8 +1,11 @@
 package ru.practicum.shareit.item.model;
 
-import lombok.*;
-
-import java.time.LocalDate;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import ru.practicum.shareit.request.ItemRequest;
+import ru.practicum.shareit.user.model.User;
 
 /**
  * TODO Sprint add-controllers.
@@ -21,5 +24,7 @@ public class Item {
 
     private Boolean isAvailable;
 
-    private LocalDate startLock; // not longer than a day
+    private User owner;
+
+    private ItemRequest request;
 }

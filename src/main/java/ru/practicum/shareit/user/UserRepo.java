@@ -65,8 +65,8 @@ public class UserRepo implements IUserRepo {
     }
 
     @Override
-    public void validateId(Long id) {
-        findUserById(id)
+    public User getUserById(Long id) {
+        return findUserById(id)
                 .orElseThrow(
                         () -> new EntityNotFoundException("User", "id", id)
                 );
