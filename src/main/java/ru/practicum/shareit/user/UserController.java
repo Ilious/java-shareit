@@ -38,7 +38,7 @@ public class UserController {
 
     @PatchMapping("/{id}")
     public UserDto patchUser(@PathVariable Long id,
-                           @RequestBody UserDto user) {
+                           @Validated(ValidateGroups.OnPatch.class) @RequestBody UserDto user) {
         return userService.patchUser(id, user);
     }
 

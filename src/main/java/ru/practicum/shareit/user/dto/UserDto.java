@@ -13,7 +13,7 @@ public record UserDto(
         String name,
 
         @NotBlank(groups = ValidateGroups.OnCreate.class)
-        @Email(groups = {ValidateGroups.OnCreate.class, ValidateGroups.OnUpdate.class})
+        @Email(groups = {ValidateGroups.OnCreate.class, ValidateGroups.OnPatch.class})
         String email
 ) {
 }
