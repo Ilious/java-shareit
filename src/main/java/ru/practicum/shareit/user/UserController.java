@@ -1,5 +1,6 @@
 package ru.practicum.shareit.user;
 
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
@@ -10,6 +11,7 @@ import ru.practicum.shareit.validator.ValidateGroups;
 
 import java.util.List;
 
+@Validated
 @RestController
 @RequestMapping(path = "/users")
 @RequiredArgsConstructor
@@ -18,7 +20,7 @@ public class UserController {
     private final IUserService userService;
 
     @GetMapping("/{id}")
-    public UserDto getById(@PathVariable Long id) {
+    public UserDto getById(@PathVariable @Positive Long id) {
         return userService.getUserById(id);
     }
 
@@ -34,7 +36,7 @@ public class UserController {
     }
 
     @PatchMapping("/{id}")
-    public UserDto patchUser(@PathVariable Long id,
+    public UserDto patchUser(@PathVariable @Positive Long id,
                            @Validated(ValidateGroups.OnPatch.class) @RequestBody UserDto user) {
         return userService.patchUser(id, user);
     }
