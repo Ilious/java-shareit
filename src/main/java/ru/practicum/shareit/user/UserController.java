@@ -10,9 +10,6 @@ import ru.practicum.shareit.validator.ValidateGroups;
 
 import java.util.List;
 
-/**
- * CRUD user controller
- */
 @RestController
 @RequestMapping(path = "/users")
 @RequiredArgsConstructor

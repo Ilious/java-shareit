@@ -7,9 +7,6 @@ import lombok.Builder;
 import ru.practicum.shareit.user.dto.UserDto;
 import ru.practicum.shareit.validator.ValidateGroups;
 
-/**
- * TODO Sprint add-controllers.
- */
 @Builder
 public record ItemDto(
 

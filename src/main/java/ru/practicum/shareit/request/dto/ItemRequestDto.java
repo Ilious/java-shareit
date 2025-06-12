@@ -5,9 +5,6 @@ import ru.practicum.shareit.validator.ValidateGroups;
 
 import java.time.LocalDate;
 
-/**
- * TODO Sprint add-item-requests.
- */
 public record ItemRequestDto(
 
         Long id,
