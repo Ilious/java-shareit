@@ -1,7 +1,19 @@
 package ru.practicum.shareit.request.dto;
 
-/**
- * TODO Sprint add-item-requests.
- */
-public class ItemRequestDto {
+import jakarta.validation.constraints.NotBlank;
+import ru.practicum.shareit.validator.ValidateGroups;
+
+import java.time.LocalDate;
+
+public record ItemRequestDto(
+
+        Long id,
+
+        Long requester,
+
+        @NotBlank(groups = ValidateGroups.OnCreate.class)
+        String description,
+
+        LocalDate created
+) {
 }
