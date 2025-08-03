@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import ru.practicum.shareit.item.dto.CommentDto;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.interfaces.IItemService;
 import ru.practicum.shareit.validator.ValidateGroups;
@@ -45,5 +46,11 @@ public class ItemController {
     @GetMapping("/search")
     public List<ItemDto> searchByText(@RequestParam String text) {
         return itemService.searchByTextQuery(text);
+    }
+
+    @PostMapping("/{itemId}/comment")
+    public CommentDto postComment(@RequestHeader(name = "X-Sharer-User-Id") @Positive Long userId,
+                                  @PathVariable @Positive Long itemId, @RequestBody CommentDto dto) {
+        return itemService.addComment(userId, itemId, dto);
     }
 }

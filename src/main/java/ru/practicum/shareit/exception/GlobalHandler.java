@@ -87,7 +87,7 @@ public class GlobalHandler {
                 .code(HttpStatus.BAD_REQUEST.value()).build();
     }
 
-    @ExceptionHandler
+    @ExceptionHandler({InternalServerException.class, Exception.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ApiError handleUnknownException(Exception exception) {
         String errMessage = "Error on server";

@@ -1,81 +1,24 @@
 package ru.practicum.shareit.user;
 
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.repository.CrudRepository;
 import ru.practicum.shareit.exception.EntityNotFoundException;
-import ru.practicum.shareit.user.interfaces.IUserRepo;
 import ru.practicum.shareit.user.model.User;
 
-import java.util.*;
+import java.util.List;
 
-@Slf4j
-@Repository
-public class UserRepo implements IUserRepo {
-
-    private final Map<Long, User> storage = new HashMap<>();
+public interface UserRepo extends CrudRepository<User, Long> {
 
     @Override
-    public Optional<User> findUserById(Long id) {
-        log.trace("UserRepo.findUserById: id {}", id);
-        return Optional.ofNullable(storage.getOrDefault(id, null));
-    }
+    List<User> findAll();
 
-    @Override
-    public List<User> findAll() {
-        log.trace("UserRepo.findAll");
+    void removeUserById(Long id);
 
-        return new ArrayList<>(storage.values());
-    }
+    boolean existsUserByEmail(String email);
 
-    @Override
-    public User addUser(User user) {
-        log.trace("UserRepo.addUser: {}", user);
-        user.setId(getNextIdx());
+    boolean existsUserByEmailAndIdNot(String email, Long id);
 
-        storage.put(user.getId(), user);
-        return user;
-    }
-
-    @Override
-    public User updUser(User user) {
-        log.trace("UserRepo.updUser: {}", user);
-        storage.put(user.getId(), user);
-
-        return user;
-    }
-
-    @Override
-    public void removeUserById(Long id) {
-        log.trace("UserRepo.removeUserById: id {}", id);
-        storage.remove(id);
-    }
-
-    @Override
-    public boolean existsUserByEmail(String email) {
-        return storage.values().stream().anyMatch(
-                u -> u.getEmail().equals(email)
-        );
-    }
-
-    @Override
-    public boolean existsUserByEmailAndIdNot(String email, Long id) {
-        return storage.values().stream().anyMatch(
-                u -> u.getEmail().equals(email) && !u.getId().equals(id)
-        );
-    }
-
-    @Override
-    public User getUserById(Long id) {
-        return findUserById(id)
-                .orElseThrow(
-                        () -> new EntityNotFoundException("User", "id", id)
-                );
-    }
-
-    private Long getNextIdx() {
-        return storage.keySet()
-                .stream()
-                .max(Comparator.naturalOrder())
-                .orElse(0L) + 1;
+    default User getUserById(Long id) {
+        return findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("User", "id", id));
     }
 }
