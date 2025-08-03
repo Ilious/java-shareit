@@ -17,6 +17,7 @@ import ru.practicum.shareit.user.UserRepo;
 import ru.practicum.shareit.user.model.User;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -84,8 +85,8 @@ public class BookingService implements IBookingService {
 
         List<Booking> bookings = switch (state) {
             case ALL -> bookingRepo.findAllByItem_Owner_Id(userId);
-            case PAST -> bookingRepo.findAllByItem_Owner_IdAndEndBefore(userId, LocalDate.now());
-            case FUTURE -> bookingRepo.findAllByItem_Owner_IdAndStartBefore(userId, LocalDate.now());
+            case PAST -> bookingRepo.findAllByItem_Owner_IdAndEndBefore(userId, LocalDateTime.now());
+            case FUTURE -> bookingRepo.findAllByItem_Owner_IdAndStartBefore(userId, LocalDateTime.now());
             case WAITING -> bookingRepo.findAllByItem_Owner_IdAndStatus(userId, BookingStatus.WAITING);
             case REJECTED -> bookingRepo.findAllByBooker_IdAndStatus(userId, BookingStatus.REJECTED);
         };
