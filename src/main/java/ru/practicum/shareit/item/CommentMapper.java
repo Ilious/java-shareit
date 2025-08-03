@@ -29,7 +29,7 @@ public class CommentMapper {
                 .build();
     }
 
-    public static void PatchFields(Comment comment, CommentDto dto) {
+    public static void patchFields(Comment comment, CommentDto dto) {
         if (Objects.nonNull(dto.text()) && !dto.text().isBlank())
             comment.setText(dto.text());
     }
