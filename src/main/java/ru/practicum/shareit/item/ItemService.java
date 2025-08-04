@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Slf4j
+@Transactional(readOnly = true)
 @Service
 @RequiredArgsConstructor
 public class ItemService implements IItemService {

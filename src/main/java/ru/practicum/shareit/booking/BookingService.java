@@ -23,6 +23,7 @@ import java.util.Objects;
 
 @Service
 @Slf4j
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class BookingService implements IBookingService {
 
@@ -46,6 +47,7 @@ public class BookingService implements IBookingService {
     }
 
     @Override
+    @Transactional
     public BookingDto addBooking(Long userId, BookingDto dto) {
         log.debug("BookingService.addBooking: userId {}, dto {}", userId, dto);
         User userById = userRepo.getUserById(userId);

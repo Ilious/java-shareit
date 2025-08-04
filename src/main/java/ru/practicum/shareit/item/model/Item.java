@@ -10,12 +10,11 @@ import java.util.List;
 
 @Entity
 @Table(name = "items")
-@Data
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(exclude = {"comments"})
-@ToString(exclude = {"comments"})
 public class Item {
 
     @Id

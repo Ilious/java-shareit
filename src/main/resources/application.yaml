@@ -29,10 +29,3 @@ logging:
         transaction:
           INFO
         interceptor: TRACE
-
-
-# TODO Append connection to DB
-#spring.datasource.driverClassName
-#spring.datasource.url
-#spring.datasource.username
-#spring.datasource.password
