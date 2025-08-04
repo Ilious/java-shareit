@@ -1,74 +1,35 @@
 package ru.practicum.shareit.item;
 
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Repository;
-import ru.practicum.shareit.item.interfaces.IItemRepo;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+import ru.practicum.shareit.exception.EntityNotFoundException;
 import ru.practicum.shareit.item.model.Item;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 
-@Slf4j
-@Repository
-public class ItemRepo implements IItemRepo {
+public interface ItemRepo extends CrudRepository<Item, Long> {
 
-    private final Map<Long, List<Item>> storage = new HashMap<>();
+    List<Item> findAllByOwnerId(Long ownerId);
 
-    @Override
-    public Optional<Item> findItemById(Long id) {
-        log.trace("ItemRepo.findItemById: id {}", id);
+    @Query("SELECT it FROM Item AS it " +
+            "WHERE it.isAvailable = true " +
+            "AND (LOWER(it.description) LIKE LOWER(CONCAT('%', :query, '%'))" +
+            "OR  LOWER(it.name) LIKE LOWER(CONCAT('%', :query, '%')))")
+    List<Item> searchByTextQuery(String query);
 
-        return storage.values().stream()
-                .flatMap(List::stream)
-                .filter(it -> it.getId().equals(id))
-                .findFirst();
-    }
+    @Query("SELECT it FROM Item it " +
+            "WHERE it.id = :itemId AND it.isAvailable = true")
+    Optional<Item> findItemForBooking(Long itemId);
 
-    @Override
-    public List<Item> findAllByUserId(Long userId) {
-        log.trace("ItemRepo.findAll: started");
+    @Query("SELECT it FROM Item it " +
+            "LEFT JOIN FETCH it.comments WHERE it.id = :itemId")
+    Optional<Item> findItemWithComments(Long itemId);
 
-        return storage.get(userId);
-    }
-
-    @Override
-    public Item addItem(Long userId, Item item) {
-        log.trace("ItemRepo.addItem: {}", item);
-        item.setId(getNextIdx());
-
-        storage.computeIfAbsent(userId, k -> new ArrayList<>()).add(item);
-        return item;
-    }
-
-    @Override
-    public Item updItem(Long userId, Item item) {
-        log.trace("ItemRepo.updItem: {}", item);
-        List<Item> itemsByUserId = storage.get(userId);
-        itemsByUserId.stream()
-                .filter(it -> it.getId().equals(item.getId()))
-                .findFirst()
-                .ifPresent(it -> {
-                    it.setName(item.getName());
-                    it.setDescription(item.getDescription());
-                    it.setIsAvailable(item.getIsAvailable());
-                });
-
-        return item;
-    }
-
-    @Override
-    public List<Item> searchByTextQuery(String query) {
-        log.trace("ItemRepo.searchByTextQuery: {}", query);
-
-        return storage.values().stream()
-                .flatMap(List::stream)
-                .filter(it -> it.getIsAvailable() && (it.getName().toLowerCase().contains(query.toLowerCase()) ||
-                        it.getDescription().toLowerCase().contains(query.toLowerCase())))
-                .toList();
-    }
-
-    private Long getNextIdx() {
-        return storage.keySet().stream()
-                .max(Comparator.naturalOrder())
-                .orElse(0L) + 1;
+    default Item getItemById(Long id) {
+        return findItemWithComments(id)
+                .orElseThrow(
+                        () -> new EntityNotFoundException("Item", "id", id)
+                );
     }
 }

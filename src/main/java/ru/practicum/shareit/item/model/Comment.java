@@ -1,0 +1,35 @@
+package ru.practicum.shareit.item.model;
+
+import jakarta.persistence.*;
+import lombok.*;
+import ru.practicum.shareit.user.model.User;
+
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "comments")
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class Comment {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @Column(nullable = false)
+    private String text;
+
+    @Column(nullable = false)
+    private LocalDateTime created;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(nullable = false)
+    private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "item_id", nullable = false)
+    private Item item;
+}

@@ -3,10 +3,10 @@ package ru.practicum.shareit.user;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.shareit.exception.EntityAlreadyExistsException;
 import ru.practicum.shareit.exception.EntityNotFoundException;
 import ru.practicum.shareit.user.dto.UserDto;
-import ru.practicum.shareit.user.interfaces.IUserRepo;
 import ru.practicum.shareit.user.interfaces.IUserService;
 import ru.practicum.shareit.user.model.User;
 
@@ -15,15 +15,16 @@ import java.util.Objects;
 
 @Slf4j
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class UserService implements IUserService {
 
-    private final IUserRepo userRepo;
+    private final UserRepo userRepo;
 
     @Override
     public UserDto getUserById(Long id) {
         log.debug("UserService.getUserById: id {}", id);
-        return UserMapper.toDto(getUser(id));
+        return UserMapper.toDto(userRepo.getUserById(id));
     }
 
     @Override
@@ -39,35 +40,31 @@ public class UserService implements IUserService {
     }
 
     @Override
+    @Transactional
     public UserDto addUser(UserDto userDto) {
         log.debug("UserService.addUser: {}", userDto);
         validateEmail(userDto.email(), null);
 
         User entity = UserMapper.toEntity(userDto);
-        return UserMapper.toDto(userRepo.addUser(entity));
+        return UserMapper.toDto(userRepo.save(entity));
     }
 
     @Override
+    @Transactional
     public UserDto patchUser(Long id, UserDto userDto) {
         log.debug("UserService.patchUser: id {}, userDto {}", id, userDto);
         validateEmail(userDto.email(), id);
-        User userById = getUser(id);
+        User userById = userRepo.getUserById(id);
         UserMapper.patchFields(userById, userDto);
 
-        return UserMapper.toDto(userRepo.updUser(userById));
+        return UserMapper.toDto(userRepo.save(userById));
     }
 
     @Override
+    @Transactional
     public void removeUserById(Long id) {
         log.debug("UserService.removeUserById: {}", id);
         userRepo.removeUserById(id);
-    }
-
-    private User getUser(Long id) {
-        return userRepo.findUserById(id)
-                .orElseThrow(
-                        () -> new EntityNotFoundException("User", "id", id)
-                );
     }
 
     private void validateEmail(String email, Long id) {
