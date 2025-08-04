@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import ru.practicum.shareit.user.model.User;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "item_requests")
@@ -18,10 +18,13 @@ public class ItemRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(
-            name = "user_seq",
-            sequenceName = "user_sequence",
+            name = "item_request_seq",
+            sequenceName = "item_request_sequence",
             allocationSize = 20)
     private Long id;
+
+    @Column
+    private String title;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "requester_id", nullable = false)
@@ -31,5 +34,5 @@ public class ItemRequest {
     private String description;
 
     @Column
-    private LocalDate created;
+    private LocalDateTime created;
 }
