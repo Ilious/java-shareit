@@ -1,6 +1,5 @@
 package ru.practicum.shareit.item.dto;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import ru.practicum.shareit.booking.dto.BookingDto;
@@ -8,7 +7,6 @@ import ru.practicum.shareit.user.dto.UserDto;
 
 import java.util.List;
 
-@Builder
 public record ItemDto(
 
         Long id,
