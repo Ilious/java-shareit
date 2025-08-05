@@ -7,6 +7,7 @@ import ru.practicum.shareit.validator.ValidateGroups;
 
 @Builder
 public record UserDto(
+
         Long id,
 
         @NotBlank(groups = ValidateGroups.OnCreate.class)

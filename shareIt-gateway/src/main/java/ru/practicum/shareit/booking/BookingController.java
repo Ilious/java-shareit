@@ -22,7 +22,7 @@ public class BookingController {
 
     private final BookingClient bookingClient;
 
-    private final static String HEADER_USER_ID =  "X-Sharer-User-Id";
+    private static final String HEADER_USER_ID = "X-Sharer-User-Id";
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> getById(@RequestHeader(name = HEADER_USER_ID) @Positive Long userId,
@@ -33,7 +33,7 @@ public class BookingController {
 
     @GetMapping
     public ResponseEntity<Object> getAllBookingsByUser(@RequestHeader(name = HEADER_USER_ID) @Positive Long userId,
-                                                 @RequestParam(defaultValue = "ALL", required = false) String state) {
+                                                       @RequestParam(defaultValue = "ALL", required = false) String state) {
         log.info("Gateway sent request [getAllBookingsByUser]: userId={}, state={}", userId, state);
         BookingState parsedState = BookingState.from(state)
                 .orElseThrow(() -> new ValidationException("state"));
@@ -42,8 +42,8 @@ public class BookingController {
 
     @GetMapping("/owner")
     public ResponseEntity<Object> getAllBookingsByUserItems(@RequestHeader(name = HEADER_USER_ID) @Positive Long userId,
-                                                      @RequestParam(defaultValue = "ALL", required = false)
-                                                      String state) {
+                                                            @RequestParam(defaultValue = "ALL", required = false)
+                                                            String state) {
         log.info("Gateway send request [getAllBookingsByUserItems]: userId={}, state={}", userId, state);
         BookingState parsedState = BookingState.from(state)
                 .orElseThrow(() -> new ValidationException("state"));
@@ -53,15 +53,15 @@ public class BookingController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Object> createBooking(@RequestHeader(name = HEADER_USER_ID) @Positive Long userId,
-                                    @RequestBody @Validated(ValidateGroups.OnCreate.class) BookingDto bookingDto) {
+                                                @RequestBody @Validated(ValidateGroups.OnCreate.class) BookingDto bookingDto) {
         log.info("Gateway send request [createBooking]: userId={}, bookingSt = {}", userId, bookingDto.start());
         return bookingClient.postBooking(userId, bookingDto);
     }
 
     @PatchMapping("/{id}")
     public ResponseEntity<Object> patchBooking(@RequestHeader(name = HEADER_USER_ID) @Positive Long userId,
-                                   @RequestParam(defaultValue = "false") Boolean approved,
-                                   @PathVariable @Positive Long id) {
+                                               @RequestParam(defaultValue = "false") Boolean approved,
+                                               @PathVariable @Positive Long id) {
         log.info("Gateway send request [patchBooking]: userId={}, approved={}", userId, approved);
         return bookingClient.patchBooking(userId, id, approved);
     }

@@ -48,7 +48,7 @@ public class ItemMapper {
                 .isAvailable(item.getIsAvailable())
                 .owner(UserMapper.toDto(item.getOwner()))
                 .comments(
-                                item.getComments().stream()
+                        item.getComments().stream()
                                 .map(CommentMapper::toDto)
                                 .toList()
                 )

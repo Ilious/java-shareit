@@ -36,9 +36,9 @@ class ItemServiceTests {
 
     @Autowired
     private BookingService bookingService;
-    
+
     private final Faker faker = new Faker();
-    
+
     private ItemDto item;
 
     private ItemDto anotherItem;
@@ -77,7 +77,7 @@ class ItemServiceTests {
         assertAll(() -> {
             assertEquals(savedItem.name(), itemById.name());
             assertEquals(savedItem.description(), itemById.description());
-            assertEquals(savedItem.isAvailable() , itemById.isAvailable());
+            assertEquals(savedItem.isAvailable(), itemById.isAvailable());
         });
     }
 
@@ -102,7 +102,7 @@ class ItemServiceTests {
         assertAll(() -> {
             assertEquals(savedItem.name(), item.name());
             assertEquals(savedItem.description(), item.description());
-            assertEquals(savedItem.isAvailable() , item.isAvailable());
+            assertEquals(savedItem.isAvailable(), item.isAvailable());
         });
     }
 
@@ -115,7 +115,7 @@ class ItemServiceTests {
         assertAll(() -> {
             assertEquals(anotherItem.name(), updItem.name());
             assertEquals(anotherItem.description(), updItem.description());
-            assertEquals(anotherItem.isAvailable() , updItem.isAvailable());
+            assertEquals(anotherItem.isAvailable(), updItem.isAvailable());
         });
     }
 

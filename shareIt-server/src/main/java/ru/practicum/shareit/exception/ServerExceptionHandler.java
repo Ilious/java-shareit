@@ -48,7 +48,7 @@ public class ServerExceptionHandler {
                 .code(HttpStatus.CONFLICT.value()).build();
     }
 
-    @ExceptionHandler(value = { ValidationException.class, BadRequestException.class })
+    @ExceptionHandler(value = {ValidationException.class, BadRequestException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiError handleValidationException(Exception exception) {
         String errMessage = "Bad request";

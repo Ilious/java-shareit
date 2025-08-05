@@ -27,7 +27,7 @@ class ItemRequestServiceTests {
     @Autowired
     private UserService userService;
 
-    private static final Faker faker = new Faker();
+    private final Faker faker = new Faker();
 
     private ItemRequestDto requestDto;
 

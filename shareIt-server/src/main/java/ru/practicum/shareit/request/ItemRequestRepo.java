@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ItemRequestRepo extends CrudRepository<ItemRequest, Long> {
 
-    List<ItemRequest> findAllByRequesterIdOrderByCreatedDesc(Long requesterId);;
+    List<ItemRequest> findAllByRequesterIdOrderByCreatedDesc(Long requesterId);
 
     default ItemRequest getItemRequestById(Long id) {
         return findById(id)

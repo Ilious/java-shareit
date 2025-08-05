@@ -19,7 +19,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.DefaultUriBuilderFactory;
-import ru.practicum.shareit.booking.dto.BookingDto;
 import ru.practicum.shareit.item.dto.CommentDto;
 import ru.practicum.shareit.item.dto.ItemDto;
 
@@ -33,7 +32,7 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class ItemClientTests {
 
-    private final static String HEADER_USER_ID =  "X-Sharer-User-Id";
+    private static final String HEADER_USER_ID = "X-Sharer-User-Id";
 
     private static MockRestServiceServer server;
 
@@ -101,9 +100,9 @@ class ItemClientTests {
     void getByIdTest() throws JsonProcessingException {
         server.expect(requestTo(URL + "/1"))
                 .andExpect(method(HttpMethod.GET))
-                        .andRespond(withSuccess()
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .body(objectMapper.writeValueAsString(item)));
+                .andRespond(withSuccess()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(objectMapper.writeValueAsString(item)));
 
         ResponseEntity<Object> responseObject = itemClient.getById(1);
         assertTrue("response is correct", responseObject.getStatusCode().is2xxSuccessful());

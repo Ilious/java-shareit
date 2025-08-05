@@ -40,7 +40,7 @@ public class UserController {
 
     @PatchMapping("/{id}")
     public ResponseEntity<Object> patchUser(@PathVariable @Positive Long id,
-                             @Validated(ValidateGroups.OnPatch.class) @RequestBody UserDto user) {
+                                            @Validated(ValidateGroups.OnPatch.class) @RequestBody UserDto user) {
         log.info("Gateway sent request [patchUser]: id={}, name={}", id, user.name());
         return userClient.patchUser(id, user);
     }

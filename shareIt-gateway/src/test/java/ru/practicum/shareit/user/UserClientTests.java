@@ -33,7 +33,6 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class UserClientTests {
 
-
     private static MockRestServiceServer mockServer;
 
     private static UserClient userClient;

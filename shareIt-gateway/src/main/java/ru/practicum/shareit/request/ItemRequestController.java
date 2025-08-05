@@ -20,7 +20,7 @@ public class ItemRequestController {
 
     private final ItemRequestClient itemRequestClient;
 
-    private final static String HEADER_USER_ID =  "X-Sharer-User-Id";
+    private static final String HEADER_USER_ID = "X-Sharer-User-Id";
 
     @GetMapping("/{requestId}")
     public ResponseEntity<Object> getRequestById(@PathVariable("requestId") @Positive Long requestId) {
@@ -43,7 +43,7 @@ public class ItemRequestController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public ResponseEntity<Object> postRequest(@RequestHeader(name = HEADER_USER_ID) @Positive Long userId,
-            @RequestBody @Validated(ValidateGroups.OnCreate.class) ItemRequestDto dto) {
+                                              @RequestBody @Validated(ValidateGroups.OnCreate.class) ItemRequestDto dto) {
         log.info("Gateway sent request [postRequest]: userId={}, req={}", userId, dto);
         return itemRequestClient.postItemReq(userId, dto);
     }

@@ -17,7 +17,7 @@ import java.util.List;
 public class BookingController {
 
     private final IBookingService bookingService;
-    
+
     private static final String HEADER_USER_ID = "X-Sharer-User-Id";
 
     @GetMapping("/{id}")
@@ -29,14 +29,14 @@ public class BookingController {
 
     @GetMapping
     public List<BookingDto> getAllBookingsByUser(@RequestHeader(name = HEADER_USER_ID) Long userId,
-                                   @RequestParam(defaultValue = "ALL", required = false) BookingState state) {
+                                                 @RequestParam(defaultValue = "ALL", required = false) BookingState state) {
         log.info("Server received request [getAllBookingsByUser]: userId={}, state={}", userId, state);
         return bookingService.getAllBookingByUserId(userId, state);
     }
 
     @GetMapping("/owner")
     public List<BookingDto> getAllBookingsByUserItems(@RequestHeader(name = HEADER_USER_ID) Long userId,
-                                   @RequestParam(defaultValue = "ALL", required = false) BookingState state) {
+                                                      @RequestParam(defaultValue = "ALL", required = false) BookingState state) {
         log.info("Server received request [getAllBookingsByUserItems]: userId={}, state={}", userId, state);
         return bookingService.getAllBookingByOwnerId(userId, state);
     }
@@ -44,7 +44,7 @@ public class BookingController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public BookingDto createBooking(@RequestHeader(name = HEADER_USER_ID) Long userId,
-            @RequestBody BookingDto bookingDto) {
+                                    @RequestBody BookingDto bookingDto) {
         log.info("Server received request [createBooking]: userId={}, bookingSt = {}", userId, bookingDto.start());
         return bookingService.addBooking(userId, bookingDto);
     }

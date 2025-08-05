@@ -11,6 +11,7 @@ import java.util.Map;
 
 @Slf4j
 public class BaseClient {
+
     protected final RestTemplate rest;
 
     public BaseClient(RestTemplate rest) {

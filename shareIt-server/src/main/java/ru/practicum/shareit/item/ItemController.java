@@ -43,7 +43,7 @@ public class ItemController {
 
     @PatchMapping("/{id}")
     public ItemDto patchItem(@RequestHeader(name = HEADER_USER_ID) Long userId,
-            @PathVariable Long id, @RequestBody ItemDto dto) {
+                             @PathVariable Long id, @RequestBody ItemDto dto) {
         log.info("Server received request [patchItem]: userId={}, name={}", userId, dto.name());
         return itemService.patchItem(id, dto, userId);
     }

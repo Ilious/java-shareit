@@ -19,13 +19,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.DefaultUriBuilderFactory;
-import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.request.dto.ItemRequestDto;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.util.AssertionErrors.*;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
@@ -34,11 +32,11 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class ItemRequestClientTests {
 
-    private final static String HEADER_USER_ID =  "X-Sharer-User-Id";
+    private static final String HEADER_USER_ID = "X-Sharer-User-Id";
 
-    private final static String ADDRESS = "http://localhost:8080";
+    private static final String ADDRESS = "http://localhost:8080";
 
-    private final static String URL = ADDRESS + "/requests";
+    private static final String URL = ADDRESS + "/requests";
 
     private static ObjectMapper mapper;
 
@@ -161,7 +159,7 @@ class ItemRequestClientTests {
         ResponseEntity<Object> responseObject = itemRequestClient.postItemReq(1L, itemRequest);
         assertTrue("response is correct", responseObject.getStatusCode().is2xxSuccessful());
 
-        ItemRequestDto object = mapper.convertValue(responseObject.getBody(),  ItemRequestDto.class);
+        ItemRequestDto object = mapper.convertValue(responseObject.getBody(), ItemRequestDto.class);
 
         assertNotNull("obj is not null", object);
         assertEquals("obj is not equal to example", itemRequest, object);

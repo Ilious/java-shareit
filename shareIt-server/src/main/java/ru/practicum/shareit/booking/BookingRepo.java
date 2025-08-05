@@ -15,9 +15,9 @@ public interface BookingRepo extends CrudRepository<Booking, Long> {
 
     List<Booking> findAllByBooker_IdAndStatus(Long bookerId, BookingStatus status);
 
-    List<Booking> findAllByBooker_IdAndStartAfter(Long bookerId, LocalDate startAfter);
+    List<Booking> findAllByBooker_IdAndStartAfter(Long bookerId, LocalDateTime startAfter);
 
-    List<Booking> findAllByBooker_IdAndEndBefore(Long bookerId, LocalDate endBefore);
+    List<Booking> findAllByBooker_IdAndEndBefore(Long booker_id, LocalDateTime end);
 
     List<Booking> findAllByItem_Owner_Id(Long itemOwnerId);
 

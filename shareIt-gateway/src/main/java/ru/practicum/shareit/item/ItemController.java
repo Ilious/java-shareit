@@ -1,6 +1,5 @@
 package ru.practicum.shareit.item;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +21,7 @@ public class ItemController {
 
     private final ItemClient itemClient;
 
-    private final static String HEADER_USER_ID =  "X-Sharer-User-Id";
+    private static final String HEADER_USER_ID =  "X-Sharer-User-Id";
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> getItemById(@PathVariable @Positive Long id) {

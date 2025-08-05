@@ -82,11 +82,11 @@ class BookingServiceTests {
         assertDoesNotThrow(() -> bookingService.getBookingById(savedBooking.id(), user.id()));
         BookingDto bookingById = bookingService.getBookingById(savedBooking.id(), user.id());
 
-                assertNotNull(bookingById);
+        assertNotNull(bookingById);
         assertAll(() -> {
             assertEquals(savedBooking.start(), bookingById.start());
             assertEquals(savedBooking.end(), bookingById.end());
-            assertEquals(BookingStatus.WAITING  , bookingById.status());
+            assertEquals(BookingStatus.WAITING, bookingById.status());
         });
     }
 

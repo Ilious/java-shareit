@@ -41,40 +41,40 @@ public class ItemRequestService implements IItemRequestService {
     }
 
     @Override
-        public List<ItemRequestDto> getRequestsAll(Long userId) {
-            return getAllWithSuggests(userId, true);
-        }
+    public List<ItemRequestDto> getRequestsAll(Long userId) {
+        return getAllWithSuggests(userId, true);
+    }
 
-        @Override
-        public List<ItemRequestDto> getRequestExceptUser(Long id) {
-            return getAllWithSuggests(id, false);
-        }
+    @Override
+    public List<ItemRequestDto> getRequestExceptUser(Long id) {
+        return getAllWithSuggests(id, false);
+    }
 
-        private List<ItemRequestDto> getAllWithSuggests(Long id, boolean exceptUser) {
-            List<ItemRequest> requests = exceptUser
-                    ? itemRequestRepo.findAllByRequesterIdNotOrderByCreatedDesc(id) :
-                    itemRequestRepo.findAllByRequesterIdOrderByCreatedDesc(id);
+    private List<ItemRequestDto> getAllWithSuggests(Long id, boolean exceptUser) {
+        List<ItemRequest> requests = exceptUser
+                ? itemRequestRepo.findAllByRequesterIdNotOrderByCreatedDesc(id) :
+                itemRequestRepo.findAllByRequesterIdOrderByCreatedDesc(id);
 
-            List<Long> requestIds = requests.stream()
-                    .map(ItemRequest::getId)
-                    .toList();
+        List<Long> requestIds = requests.stream()
+                .map(ItemRequest::getId)
+                .toList();
 
-            List<Item> relatedItems = itemRepo.findAllByRequestIdIn(requestIds);
+        List<Item> relatedItems = itemRepo.findAllByRequestIdIn(requestIds);
 
-            Map<Long, List<Item>> itemsByRequestId = relatedItems.stream()
-                    .collect(Collectors.groupingBy(item -> item.getRequest().getId(), Collectors.toList()));
+        Map<Long, List<Item>> itemsByRequestId = relatedItems.stream()
+                .collect(Collectors.groupingBy(item -> item.getRequest().getId(), Collectors.toList()));
 
-            return requests.stream()
-                    .map(request -> {
-                        List<Item> items = itemsByRequestId.getOrDefault(request.getId(), List.of());
-                        List<ItemDto> itemDtos = items.stream()
-                                .map(ItemMapper::toDto)
-                                .toList();
+        return requests.stream()
+                .map(request -> {
+                    List<Item> items = itemsByRequestId.getOrDefault(request.getId(), List.of());
+                    List<ItemDto> itemDtos = items.stream()
+                            .map(ItemMapper::toDto)
+                            .toList();
 
-                        return ItemRequestMapper.toDto(request, itemDtos);
-                    })
-                    .toList();
-        }
+                    return ItemRequestMapper.toDto(request, itemDtos);
+                })
+                .toList();
+    }
 
     @Override
     @Transactional

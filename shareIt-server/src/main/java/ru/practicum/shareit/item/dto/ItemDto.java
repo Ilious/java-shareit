@@ -7,6 +7,7 @@ import ru.practicum.shareit.user.dto.UserDto;
 
 import java.util.List;
 
+@Builder(toBuilder = true)
 public record ItemDto(
 
         Long id,

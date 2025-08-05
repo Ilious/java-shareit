@@ -72,8 +72,8 @@ public class BookingService implements IBookingService {
 
         List<Booking> bookings = switch (state) {
             case ALL -> bookingRepo.findAllByBooker_Id(userId);
-            case PAST -> bookingRepo.findAllByBooker_IdAndEndBefore(userId, LocalDate.now());
-            case FUTURE -> bookingRepo.findAllByBooker_IdAndStartAfter(userId, LocalDate.now());
+            case PAST -> bookingRepo.findAllByBooker_IdAndEndBefore(userId, LocalDateTime.now());
+            case FUTURE -> bookingRepo.findAllByBooker_IdAndStartAfter(userId, LocalDateTime.now());
             case WAITING -> bookingRepo.findAllByBooker_IdAndStatus(userId, BookingStatus.WAITING);
             case REJECTED -> bookingRepo.findAllByBooker_IdAndStatus(userId, BookingStatus.REJECTED);
         };

@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @Profile("test")
 @Transactional
-class UserServiceIntegrationTests {
+class UserServiceTests {
 
     @Autowired
     private UserService userService;

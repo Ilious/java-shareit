@@ -10,16 +10,17 @@ import java.time.LocalDateTime;
 
 @Builder
 public record CommentDto(
-    Long id,
 
-    @NotBlank(groups = ValidateGroups.OnCreate.class)
-    String text,
+        Long id,
 
-    @NotBlank(groups = ValidateGroups.OnCreate.class)
-    String authorName,
+        @NotBlank(groups = ValidateGroups.OnCreate.class)
+        String text,
 
-    @NotNull(groups = ValidateGroups.OnCreate.class)
-    @PastOrPresent(groups = {ValidateGroups.OnCreate.class, ValidateGroups.OnPatch.class})
-    LocalDateTime created
+        @NotBlank(groups = ValidateGroups.OnCreate.class)
+        String authorName,
+
+        @NotNull(groups = ValidateGroups.OnCreate.class)
+        @PastOrPresent(groups = {ValidateGroups.OnCreate.class, ValidateGroups.OnPatch.class})
+        LocalDateTime created
 ) {
 }
