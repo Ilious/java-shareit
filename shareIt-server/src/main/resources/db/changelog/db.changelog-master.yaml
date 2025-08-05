@@ -1,0 +1,6 @@
+databaseChangeLog:
+  - include:
+      relativeToChangelogFile: true
+      file: changes/shareit_init.sql
+  - include:
+      file: db/changelog/changes/05-01-changelog.sql
