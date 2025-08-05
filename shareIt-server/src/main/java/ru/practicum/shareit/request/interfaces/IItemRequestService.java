@@ -12,5 +12,5 @@ public interface IItemRequestService {
 
     List<ItemRequestDto> getRequestExceptUser(Long id);
 
-    ItemRequestDto addItemRequest(Long userId, ItemRequestDto ItemRequestDto);
+    ItemRequestDto addItemRequest(Long userId, ItemRequestDto itemRequestDto);
 }

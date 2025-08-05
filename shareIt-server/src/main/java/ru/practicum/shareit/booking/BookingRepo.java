@@ -5,7 +5,6 @@ import ru.practicum.shareit.booking.model.Booking;
 import ru.practicum.shareit.booking.model.BookingStatus;
 import ru.practicum.shareit.exception.EntityNotFoundException;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -17,7 +16,7 @@ public interface BookingRepo extends CrudRepository<Booking, Long> {
 
     List<Booking> findAllByBooker_IdAndStartAfter(Long bookerId, LocalDateTime startAfter);
 
-    List<Booking> findAllByBooker_IdAndEndBefore(Long booker_id, LocalDateTime end);
+    List<Booking> findAllByBooker_IdAndEndBefore(Long bookerId, LocalDateTime end);
 
     List<Booking> findAllByItem_Owner_Id(Long itemOwnerId);
 
