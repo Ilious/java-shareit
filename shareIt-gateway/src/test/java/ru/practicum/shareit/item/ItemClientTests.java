@@ -44,9 +44,9 @@ class ItemClientTests {
 
     private static ItemClient itemClient;
 
-    private final static String ADDRESS = "http://localhost:8080";
+    private static final String ADDRESS = "http://localhost:8080";
 
-    private final static String URL = ADDRESS + "/items";
+    private static final String URL = ADDRESS + "/items";
 
     private static Faker faker;
 
