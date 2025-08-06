@@ -18,6 +18,8 @@ public class UserMapper {
     }
 
     public static UserDto toDto(User user) {
+        if (Objects.isNull(user))
+            return null;
         return UserDto.builder()
                 .id(user.getId())
                 .name(user.getName())
