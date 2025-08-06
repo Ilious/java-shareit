@@ -110,11 +110,18 @@ class BookingServiceTests {
         BookingDto savedBooking = bookingService.addBooking(user.id(), booking);
 
         BookingDto savedBooking2 = bookingService.addBooking(anotherUser.id(), booking);
-        List<BookingDto> bookingsByUserId = bookingService.getAllBookingByUserId(user.id(), BookingState.WAITING);
+        for (BookingState status : BookingState.values()) {
+            List<BookingDto> bookingsByUserId = bookingService.getAllBookingByUserId(user.id(), status);
 
-        assertNotNull(bookingsByUserId);
-        assertEquals(1, bookingsByUserId.size());
-        assertTrue(bookingsByUserId.contains(savedBooking));
+            if (status.equals(BookingState.WAITING) || status.equals(BookingState.ALL)) {
+                assertNotNull(bookingsByUserId);
+                assertEquals(1, bookingsByUserId.size());
+                assertTrue(bookingsByUserId.contains(savedBooking));
+            }  else {
+                assertNotNull(bookingsByUserId);
+                assertTrue(bookingsByUserId.isEmpty());
+            }
+        }
     }
 
     @Test
