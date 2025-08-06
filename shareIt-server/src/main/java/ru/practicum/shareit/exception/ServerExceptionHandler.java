@@ -14,7 +14,7 @@ public class ServerExceptionHandler {
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.FORBIDDEN)
-    public ApiError handleUnauthorizedException(ForbiddenException exception) {
+    public ApiError handleForbiddenException(ForbiddenException exception) {
         String errMessage = "Forbidden err";
         log.warn("{}:\n {}", errMessage, exception.getMessage());
         return ApiError.builder()
