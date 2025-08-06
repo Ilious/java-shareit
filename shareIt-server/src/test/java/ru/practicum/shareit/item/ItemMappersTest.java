@@ -67,7 +67,7 @@ class ItemMappersTest {
     }
 
     @Test
-    void ToDtoWithBookingsTest() {
+    void toDtoWithBookingsTest() {
         Booking booking = Booking.builder()
                 .id(faker.number().randomNumber())
                 .start(LocalDateTime.now())
