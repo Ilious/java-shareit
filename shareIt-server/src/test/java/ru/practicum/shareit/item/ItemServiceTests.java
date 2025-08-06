@@ -10,8 +10,11 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.shareit.booking.BookingService;
 import ru.practicum.shareit.booking.dto.BookingDto;
+import ru.practicum.shareit.exception.BadRequestException;
 import ru.practicum.shareit.item.dto.CommentDto;
 import ru.practicum.shareit.item.dto.ItemDto;
+import ru.practicum.shareit.request.ItemRequestService;
+import ru.practicum.shareit.request.dto.ItemRequestDto;
 import ru.practicum.shareit.user.UserService;
 import ru.practicum.shareit.user.dto.UserDto;
 
@@ -36,6 +39,9 @@ class ItemServiceTests {
 
     @Autowired
     private BookingService bookingService;
+
+    @Autowired
+    private ItemRequestService itemRequestService;
 
     private final Faker faker = new Faker();
 
@@ -107,6 +113,28 @@ class ItemServiceTests {
     }
 
     @Test
+    void addItem_withItemRequest() {
+        ItemRequestDto requestDto = ItemRequestDto.builder()
+                .title(faker.book().title())
+                .description(faker.lorem().sentence())
+                .requester(user)
+                .build();
+        requestDto = itemRequestService.addItemRequest(user.id(), requestDto);
+
+        item = item.toBuilder().requestId(requestDto.id()).build();
+        ItemDto savedItem = itemService.addItem(user.id(), item);
+
+        assertNotNull(savedItem);
+        assertNotNull(savedItem.id());
+        ItemRequestDto finalRequestDto = requestDto;
+        assertAll(() -> {
+            assertEquals(savedItem.name(), item.name());
+            assertEquals(savedItem.description(), item.description());
+            assertEquals(savedItem.isAvailable(), item.isAvailable());
+        });
+    }
+
+    @Test
     void patchItem() {
         ItemDto savedItem = itemService.addItem(user.id(), item);
 
@@ -139,6 +167,26 @@ class ItemServiceTests {
 
         assertNotNull(bookingsByUserId);
         assertEquals(2, bookingsByUserId.size());
+    }
+
+    @Test
+    void addComment_withNoBooking() {
+        UserDto anotherUser = UserDto.builder()
+                .name(faker.name().username())
+                .email(faker.internet().emailAddress())
+                .build();
+        anotherUser = userService.addUser(anotherUser);
+
+        item = itemService.addItem(user.id(), item);
+
+        CommentDto comment = CommentDto.builder()
+                .authorName(faker.name().username())
+                .text(faker.lorem().sentence())
+                .build();
+
+        UserDto finalAnotherUser = anotherUser;
+        assertThrows(BadRequestException.class, () -> itemService
+                .addComment(finalAnotherUser.id(), item.id(), comment));
     }
 
     @Test
