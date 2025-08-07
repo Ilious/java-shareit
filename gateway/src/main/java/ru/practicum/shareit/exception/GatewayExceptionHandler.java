@@ -71,14 +71,4 @@ public class GatewayExceptionHandler {
                 .error(errMessage)
                 .code(HttpStatus.BAD_REQUEST.value()).build();
     }
-
-    @ExceptionHandler({InternalServerException.class, Exception.class})
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ApiError handleUnknownException(Exception exception) {
-        String errMessage = "Error on server";
-        log.warn("{}: {} \n {}", errMessage, exception.getMessage(), exception.getStackTrace());
-        return ApiError.builder()
-                .error(errMessage)
-                .code(HttpStatus.INTERNAL_SERVER_ERROR.value()).build();
-    }
 }

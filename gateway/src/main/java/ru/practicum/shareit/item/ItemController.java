@@ -1,5 +1,6 @@
 package ru.practicum.shareit.item;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -51,7 +52,7 @@ public class ItemController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<Object> searchByText(@RequestParam String text) {
+    public ResponseEntity<Object> searchByText(@RequestParam @NotBlank String text) {
         log.info("Gateway sent request [searchByText]: text={}", text);
         return itemClient.searchByText(text);
     }

@@ -93,8 +93,6 @@ public class ItemService implements IItemService {
     @Override
     public List<ItemDto> searchByTextQuery(String query) {
         log.debug("ItemService.patchItem: query {}", query);
-        if (Objects.isNull(query) || query.isBlank())
-            return new ArrayList<>();
 
         return itemRepo.searchByTextQuery(query)
                 .stream()
