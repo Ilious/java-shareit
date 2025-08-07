@@ -130,7 +130,7 @@ class BookingControllerTests {
 
         mockMvc.perform(get("/bookings/owner?state=ALL1")
                         .header(HEADER_USER_ID, "1"))
-                .andExpect(status().isInternalServerError());
+                .andExpect(status().isBadRequest());
 
         verifyNoInteractions(bookingClient);
     }

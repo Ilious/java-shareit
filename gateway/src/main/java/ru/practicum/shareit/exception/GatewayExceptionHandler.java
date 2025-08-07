@@ -62,9 +62,9 @@ public class GatewayExceptionHandler {
                 .code(HttpStatus.BAD_REQUEST.value()).build();
     }
 
-    @ExceptionHandler
+    @ExceptionHandler(value = {ru.practicum.shareit.exception.ValidationException.class, ValidationException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ApiError handleValidationException(ValidationException exception) {
+    public ApiError handleValidationException(Exception exception) {
         String errMessage = "Bad request";
         log.warn("{}:\n {}", errMessage, exception.getMessage());
         return ApiError.builder()
